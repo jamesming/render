@@ -4,7 +4,6 @@ import canvg from 'canvg';
 import $ from 'jquery';
 import { data2 } from '../data/data2.js';
 
-console.log(`data2: `, JSON.stringify(data2, null, 2));
 
 const iframeWidth = 700;
 
@@ -20,6 +19,7 @@ const createPDF = (canvasObj) => {
     // ctx.width = 638;
     // ctx.height = 825;
     // console.clear();
+    console.log(`data2: `, JSON.stringify(data2, null, 2));
     console.log(`canvasObj: `, canvasObj);
 
     document.getElementById('dom2print').appendChild(canvasObj);
