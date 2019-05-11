@@ -2,23 +2,11 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import canvg from 'canvg';
 import $ from 'jquery';
-import { data2 } from './data2.js';
+import { data2 } from '../data/data2.js';
 
 console.log(`data2: `, JSON.stringify(data2, null, 2));
 
 const iframeWidth = 700;
-
-const createPNG = (canvasObj) => {
-  const img64 = canvasObj.toDataURL("image/png");
-  const img = document.createElement("img");
-  img.src = img64;
-  img.style.width = '97%';
-
-  const iframe = document.createElement('iframe');
-  iframe.setAttribute('style', `margin-right:20px;position:absolute;right:50px; top:0;height:50%; width:${iframeWidth}px`);
-  document.body.appendChild(iframe);
-  $('iframe').contents().find('body').append(img);
-};
 
 const createPDF = (canvasObj) => {
 
@@ -46,11 +34,12 @@ const createPDF = (canvasObj) => {
 
     const pdfConf = {
         orientation: 'portrait',
-        unit: 'pt',
+        unit: 'px',
         format: 'letter',
         pagesplit: false,
         background: '#fff',
       };
+
     const pdf = new jsPDF(pdfConf);
     pdf.html(
       document.querySelector("canvas"), {
@@ -64,6 +53,18 @@ const createPDF = (canvasObj) => {
       }
     });
 
+};
+
+const createPNG = (canvasObj) => {
+  const img64 = canvasObj.toDataURL("image/png");
+  const img = document.createElement("img");
+  img.src = img64;
+  img.style.width = '97%';
+
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('style', `margin-right:20px;position:absolute;right:50px; top:0;height:50%; width:${iframeWidth}px`);
+  document.body.appendChild(iframe);
+  $('iframe').contents().find('body').append(img);
 };
 
 html2canvas(
