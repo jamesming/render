@@ -2,7 +2,9 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import canvg from 'canvg';
 import $ from 'jquery';
-import { dataFetchTree } from './data.js';
+import { data2 } from './data2.js';
+
+console.log(`data2: `, JSON.stringify(data2, null, 2));
 
 const iframeWidth = 700;
 
