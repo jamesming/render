@@ -2,9 +2,10 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import canvg from 'canvg';
 import $ from 'jquery';
-
+import { dataFetchTree } from './data.js';
 
 const iframeWidth = 700;
+
 const createPNG = (canvasObj) => {
   const img64 = canvasObj.toDataURL("image/png");
   const img = document.createElement("img");
@@ -25,7 +26,7 @@ const createPDF = (canvasObj) => {
     // canvasObj.setAttribute('width', 638);
     // canvasObj.setAttribute('height', 825);
 
-    // var ctx = canvas.getContext("2d");
+    // var ctx = canxvas.getContext("2d");
     // ctx.width = 638;
     // ctx.height = 825;
 
@@ -42,7 +43,7 @@ const createPDF = (canvasObj) => {
     // console.log(canvas);
 
     const pdfConf = {
-        orientation: 'p',
+        orientation: 'portrait',
         unit: 'pt',
         format: 'letter',
         pagesplit: false,
