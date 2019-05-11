@@ -19,7 +19,7 @@ const createPDF = (canvasObj) => {
     // var ctx = canxvas.getContext("2d");
     // ctx.width = 638;
     // ctx.height = 825;
-
+    // console.clear();
     console.log(`canvasObj: `, canvasObj);
 
     document.getElementById('dom2print').appendChild(canvasObj);
@@ -34,7 +34,7 @@ const createPDF = (canvasObj) => {
 
     const pdfConf = {
         orientation: 'portrait',
-        unit: 'px',
+        unit: 'pt',
         format: 'letter',
         pagesplit: false,
         background: '#fff',
@@ -59,7 +59,7 @@ const createPNG = (canvasObj) => {
   const img64 = canvasObj.toDataURL("image/png");
   const img = document.createElement("img");
   img.src = img64;
-  img.style.width = '97%';
+  img.style.width = '100%';
 
   const iframe = document.createElement('iframe');
   iframe.setAttribute('style', `margin-right:20px;position:absolute;right:50px; top:0;height:50%; width:${iframeWidth}px`);
