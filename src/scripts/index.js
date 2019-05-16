@@ -67,8 +67,20 @@ const createPNG = (canvasObj) => {
   $('iframe').contents().find('body').append(img);
 };
 
-html2canvas(
-  document.getElementById('userCanvas')).then(
+const canvas = document.getElementById('userCanvas');
+
+canvas.innerHTML = `
+  <div
+    style='
+    width: 304px;
+    height: 393px;
+    border: .25px solid gray;
+  '>
+  </div>
+`;
+
+html2canvas( canvas )
+  .then(
     canvasObj => {
       createPNG(canvasObj);
       createPDF(canvasObj);
