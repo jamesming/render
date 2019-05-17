@@ -99,8 +99,6 @@ const doLayout = () => {
     });
   });
 
-  console.log(`componentsArray: `, JSON.stringify(componentsArray.toString(), null, 2));
-
   return componentsArray.join("");
 };
 
