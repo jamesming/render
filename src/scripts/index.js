@@ -70,34 +70,39 @@ const createPNG = (canvasObj) => {
 const canvas = document.getElementById('userCanvas');
 
 const createDiv = ({x, y, width, height}) => {
-  return `
-      <div
-        style='
-          position: absolute;
-          top: ${x}px;
-          left: ${y}px;
-          width: ${width}px;
-          height: ${height}px;
-          border: .25px solid gray;
-          background: red;
-      '></div>
-  `;
+  return ` <div style='
+              position: absolute;
+              top: ${x}px;
+              left: ${y}px;
+              width: ${width}px;
+              height: ${height}px;
+              border: .25px solid gray;
+              background: red;'>
+            </div>`;
 };
 
 const doLayout = () => {
 
-  const fooArray = [10, 20, 30];
+  let fooArray = [];
+  let idx = 10;
+  const max = 90;
+  while(idx < max){
+    idx += 10;
+    fooArray.push(idx);
+  };
 
-  const componentsArray = fooArray.map((bar, idx)=>{
+  const componentsArray = fooArray.map((foo)=>{
     return createDiv({
-      x: bar,
-      y: bar,
+      x: foo,
+      y: foo,
       width: 10,
       height: 10,
     });
   });
 
-  return componentsArray;
+  console.log(`componentsArray: `, JSON.stringify(componentsArray.toString(), null, 2));
+
+  return componentsArray.join("");
 };
 
 canvas.innerHTML = `
