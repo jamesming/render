@@ -84,18 +84,29 @@ const createDiv = ({x, y, width, height}) => {
   `;
 };
 
+const doLayout = () => {
+
+  const fooArray = [10, 20, 30];
+
+  const componentsArray = fooArray.map((bar, idx)=>{
+    return createDiv({
+      x: bar,
+      y: bar,
+      width: 10,
+      height: 10,
+    });
+  });
+
+  return componentsArray;
+};
+
 canvas.innerHTML = `
   <div
     style='
     width: 304px;
     height: 393px;
     border: .25px solid gray;
-  '>${createDiv({
-    x: 10,
-    y: 10,
-    width: 100,
-    height: 100,
-  })}
+  '>${doLayout()}
   </div>
 `;
 
