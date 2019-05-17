@@ -76,8 +76,7 @@ const createDiv = ({x, y, width, height}) => {
               left: ${y}px;
               width: ${width}px;
               height: ${height}px;
-              border: .25px solid gray;
-              background: red;'>
+              border: .25px solid gray;'>
             </div>`;
 };
 
@@ -85,7 +84,7 @@ const doLayout = () => {
 
   let fooArray = [];
   let idx = 10;
-  const max = 90;
+  const max = 150;
   while(idx < max){
     idx += 10;
     fooArray.push(idx);
@@ -95,8 +94,8 @@ const doLayout = () => {
     return createDiv({
       x: foo,
       y: foo,
-      width: 10,
-      height: 10,
+      width: foo,
+      height: foo,
     });
   });
 
