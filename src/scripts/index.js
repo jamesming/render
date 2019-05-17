@@ -69,13 +69,33 @@ const createPNG = (canvasObj) => {
 
 const canvas = document.getElementById('userCanvas');
 
+const createDiv = ({x, y, width, height}) => {
+  return `
+      <div
+        style='
+          position: absolute;
+          top: ${x}px;
+          left: ${y}px;
+          width: ${width}px;
+          height: ${height}px;
+          border: .25px solid gray;
+          background: red;
+      '></div>
+  `;
+};
+
 canvas.innerHTML = `
   <div
     style='
     width: 304px;
     height: 393px;
     border: .25px solid gray;
-  '>
+  '>${createDiv({
+    x: 10,
+    y: 10,
+    width: 100,
+    height: 100,
+  })}
   </div>
 `;
 
