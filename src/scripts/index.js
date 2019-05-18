@@ -97,11 +97,15 @@ const doLayout = () => {
     const dataWidth  = data2.width;
     const dataHeight  = data2.height;
 
-    let widthRatio = 306 / dataWidth;
-    let heightRatio = 395 / dataHeight;
+    // let widthRatio = (306 / dataWidth);
+    // let heightRatio = (395 / dataHeight);
 
-    widthRatio = 0.24;
-    heightRatio = 0.23939393939393938;
+    const shrinkage = .994;
+    const widthRatio = 0.24 * shrinkage;
+    const heightRatio = 0.23939393939393938 * shrinkage;
+
+    canvas.style.width = dataWidth * widthRatio;
+    canvas.style.height = dataHeight * heightRatio;
 
     // console.log(`{widthRatio, heightRatio}: `, JSON.stringify({widthRatio, heightRatio}, null, 2));
 
@@ -124,9 +128,9 @@ const doLayout = () => {
       console.log(`element.left: `, element.left);
       return createDiv({
         x: element.left * widthRatio,
-        y: element.top * widthRatio,
+        y: element.top * heightRatio,
         width: element.width * widthRatio,
-        height: element.height * widthRatio,
+        height: element.height * heightRatio,
       });
     });
 
