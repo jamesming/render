@@ -72,8 +72,8 @@ const canvas = document.getElementById('userCanvas');
 const createDiv = ({x, y, width, height}) => {
   return ` <div style='
               position: absolute;
-              top: ${x}px;
-              left: ${y}px;
+              top: ${y}px;
+              left: ${x}px;
               width: ${width}px;
               height: ${height}px;
               border: .25px solid gray;'>
@@ -107,6 +107,8 @@ const doLayout = () => {
 
     const elements = data2.data.elements;
 
+    console.log(`elements: `, JSON.stringify(elements, null, 2));
+
     const renderElements = elements.map((element)=>{
       return {
           top: parseFloat(element.style.element.top),
@@ -119,6 +121,7 @@ const doLayout = () => {
     // console.log(`renderElements: `, JSON.stringify(renderElements, null, 2));
 
     return renderElements.map((element)=>{
+      console.log(`element.left: `, element.left);
       return createDiv({
         x: element.left * widthRatio,
         y: element.top * widthRatio,
