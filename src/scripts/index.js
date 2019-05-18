@@ -6,6 +6,19 @@ import { data2 } from '../data/data2.js';
 
 
 const iframeWidth = 700;
+const dataWidth  = data2.width;
+const dataHeight  = data2.height;
+
+// let widthRatio = (306 / dataWidth);
+// let heightRatio = (395 / dataHeight);
+
+const widthRatio = 0.238/* * shrinkage*/;
+const heightRatio = 0.234/* * shrinkage*/;
+
+const canvas = document.getElementById('userCanvas');
+canvas.style.width = (dataWidth + 1.1) * widthRatio;
+canvas.style.height = (dataHeight + 1.1 ) * heightRatio;
+
 
 const createPDF = (canvasObj) => {
 
@@ -67,7 +80,6 @@ const createPNG = (canvasObj) => {
   $('iframe').contents().find('body').append(img);
 };
 
-const canvas = document.getElementById('userCanvas');
 
 const createDiv = ({x, y, width, height}) => {
   return ` <div style='
@@ -94,24 +106,9 @@ const doLayout = () => {
 
   const buildElements = () => {
 
-    const dataWidth  = data2.width;
-    const dataHeight  = data2.height;
-
-    // let widthRatio = (306 / dataWidth);
-    // let heightRatio = (395 / dataHeight);
-
-    const shrinkage = .994;
-    const widthRatio = 0.24 * shrinkage;
-    const heightRatio = 0.23939393939393938 * shrinkage;
-
-    canvas.style.width = dataWidth * widthRatio;
-    canvas.style.height = dataHeight * heightRatio;
-
     // console.log(`{widthRatio, heightRatio}: `, JSON.stringify({widthRatio, heightRatio}, null, 2));
 
     const elements = data2.data.elements;
-
-    console.log(`elements: `, JSON.stringify(elements, null, 2));
 
     const renderElements = elements.map((element)=>{
       return {
@@ -125,7 +122,6 @@ const doLayout = () => {
     // console.log(`renderElements: `, JSON.stringify(renderElements, null, 2));
 
     return renderElements.map((element)=>{
-      console.log(`element.left: `, element.left);
       return createDiv({
         x: element.left * widthRatio,
         y: element.top * heightRatio,
@@ -138,8 +134,6 @@ const doLayout = () => {
   };
 
   componentsArray = buildElements();
-
-  console.log(`componentsArray: `, JSON.stringify(componentsArray, null, 2));
 
   // const componentsArray = fooArray.map((foo)=>{
   //   return createDiv({
@@ -156,8 +150,8 @@ const doLayout = () => {
 canvas.innerHTML = `
   <div
     style='
-    width: 304px;
-    height: 393px;
+    width: ${(dataWidth * widthRatio)}px;
+    height: ${(dataHeight * heightRatio)}px;
     border: .25px solid gray;
   '>${doLayout()}
   </div>
