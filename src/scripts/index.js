@@ -19,8 +19,8 @@ const createPDF = (canvasObj) => {
     // ctx.width = 638;
     // ctx.height = 825;
     // console.clear();
-    console.log(`data2: `, JSON.stringify(data2, null, 2));
-    console.log(`canvasObj: `, canvasObj);
+    // console.log(`data2: `, JSON.stringify(data2, null, 2));
+    // console.log(`canvasObj: `, canvasObj);
 
     document.getElementById('dom2print').appendChild(canvasObj);
 /*
@@ -90,14 +90,58 @@ const doLayout = () => {
     fooArray.push(idx);
   };
 
-  const componentsArray = fooArray.map((foo)=>{
-    return createDiv({
-      x: foo,
-      y: foo,
-      width: foo,
-      height: foo,
+  let componentsArray = [];
+
+  const buildElements = () => {
+
+    const dataWidth  = data2.width;
+    const dataHeight  = data2.height;
+
+    let widthRatio = 306 / dataWidth;
+    let heightRatio = 395 / dataHeight;
+
+    widthRatio = 0.24;
+    heightRatio = 0.23939393939393938;
+
+    // console.log(`{widthRatio, heightRatio}: `, JSON.stringify({widthRatio, heightRatio}, null, 2));
+
+    const elements = data2.data.elements;
+
+    const renderElements = elements.map((element)=>{
+      return {
+          top: parseFloat(element.style.element.top),
+          left: parseFloat(element.style.element.left),
+          width: parseFloat(element.style.element.width),
+          height: parseFloat(element.style.element.height),
+      };
     });
-  });
+
+    // console.log(`renderElements: `, JSON.stringify(renderElements, null, 2));
+
+    return renderElements.map((element)=>{
+      return createDiv({
+        x: element.left * widthRatio,
+        y: element.top * widthRatio,
+        width: element.width * widthRatio,
+        height: element.height * widthRatio,
+      });
+    });
+
+
+  };
+
+  componentsArray = buildElements();
+
+  console.log(`componentsArray: `, JSON.stringify(componentsArray, null, 2));
+
+  // const componentsArray = fooArray.map((foo)=>{
+  //   return createDiv({
+  //     x: foo,
+  //     y: foo,
+  //     width: foo,
+  //     height: foo,
+  //   });
+  // });
 
   return componentsArray.join("");
 };
