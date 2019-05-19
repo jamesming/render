@@ -2,48 +2,34 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import canvg from 'canvg';
 import $ from 'jquery';
-import { data2 } from '../data/data2.js';
+import { data3 } from '../data/data3.js';
 
 
+const debugMode = true;
+let debugBorder = 0;
 const iframeWidth = 700;
-const dataWidth  = data2.width;
-const dataHeight  = data2.height;
+const pictographrWidth  = data3.width;
+const pictographrHeight  = data3.height;
 
-// let widthRatio = (306 / dataWidth);
-// let heightRatio = (395 / dataHeight);
+// let widthRatio = (306 / pictographrWidth);
+// let heightRatio = (395 / pictographrHeight);
 
-const widthRatio = 0.238/* * shrinkage*/;
-const heightRatio = 0.234/* * shrinkage*/;
+const widthRatio = 0.23870;
+const heightRatio = 0.23870;
 
-const canvas = document.getElementById('userCanvas');
-canvas.style.width = (dataWidth + 1.1) * widthRatio;
-canvas.style.height = (dataHeight + 1.1 ) * heightRatio;
+const userCanvas = document.getElementById('userCanvas');
+const buffer = .5;
+userCanvas.style.width = `${((pictographrWidth ) * widthRatio) + buffer}px`;
+userCanvas.style.height = `${((pictographrHeight ) * heightRatio) + buffer}px`;
+
+if(debugMode){
+  debugBorder = .25;
+}
 
 
 const createPDF = (canvasObj) => {
 
-    // canvasObj.width = 638;
-    // canvasObj.height = 825;
-
-    // canvasObj.setAttribute('width', 638);
-    // canvasObj.setAttribute('height', 825);
-
-    // var ctx = canxvas.getContext("2d");
-    // ctx.width = 638;
-    // ctx.height = 825;
-    // console.clear();
-    // console.log(`data2: `, JSON.stringify(data2, null, 2));
-    // console.log(`canvasObj: `, canvasObj);
-
     document.getElementById('dom2print').appendChild(canvasObj);
-/*
-    var canvas = document.querySelector("canvas");
-    console.log(`canvas.width: `, canvas.width);
-    // canvas.height = '300px';
-    canvas.width = 638;
-    canvas.height = 825;
-*/
-    // console.log(canvas);
 
     const pdfConf = {
         orientation: 'portrait',
@@ -55,8 +41,7 @@ const createPDF = (canvasObj) => {
 
     const pdf = new jsPDF(pdfConf);
     pdf.html(
-      document.querySelector("canvas"), {
-      // width: 20,
+      document.getElementById('userCanvas'), {
       callback: function (pdf) {
         var iframe2 = document.createElement('iframe');
         iframe2.setAttribute('style', `margin-right:20px;position:absolute;right:50px; bottom:0; height:50%; width:${iframeWidth}px`);
@@ -88,7 +73,7 @@ const createDiv = ({x, y, width, height}) => {
               left: ${x}px;
               width: ${width}px;
               height: ${height}px;
-              border: .25px solid gray;'>
+              border: ${debugBorder}px solid gray;'>
             </div>`;
 };
 
@@ -106,11 +91,9 @@ const doLayout = () => {
 
   const buildElements = () => {
 
-    // console.log(`{widthRatio, heightRatio}: `, JSON.stringify({widthRatio, heightRatio}, null, 2));
+    const elements = data3.data.elements;
 
-    const elements = data2.data.elements;
-
-    const renderElements = elements.map((element)=>{
+    const createElements = elements.map((element)=>{
       return {
           top: parseFloat(element.style.element.top),
           left: parseFloat(element.style.element.left),
@@ -119,9 +102,7 @@ const doLayout = () => {
       };
     });
 
-    // console.log(`renderElements: `, JSON.stringify(renderElements, null, 2));
-
-    return renderElements.map((element)=>{
+    return createElements.map((element)=>{
       return createDiv({
         x: element.left * widthRatio,
         y: element.top * heightRatio,
@@ -130,39 +111,30 @@ const doLayout = () => {
       });
     });
 
-
   };
 
   componentsArray = buildElements();
-
-  // const componentsArray = fooArray.map((foo)=>{
-  //   return createDiv({
-  //     x: foo,
-  //     y: foo,
-  //     width: foo,
-  //     height: foo,
-  //   });
-  // });
-
   return componentsArray.join("");
 };
 
-canvas.innerHTML = `
+userCanvas.innerHTML = `
   <div
     style='
-    width: ${(dataWidth * widthRatio)}px;
-    height: ${(dataHeight * heightRatio)}px;
-    border: .25px solid gray;
+    position: absolute;
+    left: ${buffer}px;
+    top: ${buffer}px;
+    width: ${(pictographrWidth * widthRatio)}px;
+    height: ${(pictographrHeight * heightRatio)}px;
+    border: ${debugBorder}px solid gray;
   '>${doLayout()}
   </div>
 `;
 
-html2canvas( canvas )
+html2canvas( userCanvas )
   .then(
     canvasObj => {
       createPNG(canvasObj);
       createPDF(canvasObj);
-
     }
   );
 
