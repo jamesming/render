@@ -73,7 +73,10 @@ const createDiv = ({x, y, width, height, base64}) => {
   let img = undefined;
   const base64Prefix = 'data:image/png;base64';
   if(typeof(base64) !== 'undefined'){
+
     console.log('img found');
+
+    // base64 = base64Prefix + base64.substring(23);
     const src = base64;
 
 
